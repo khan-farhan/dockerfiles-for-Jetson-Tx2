@@ -30,9 +30,9 @@ cp /usr/include/cudnn.h /usr/local/cuda/include
 Running docker images
 =====================
 
-Running the docker images normally will use only CPU of Jetson Tx2 as the docker containers doesn't have any access to the GPU. The access can be given by passing some libraries and giving some device permissions to the container.
+Running the docker images normally will utilize only CPU of Jetson Tx2 as the docker containers doesn't have any access to the GPU. The access can be given by passing some libraries and giving some device permissions to the container.
 
-To run the images use following command:
+To run the images on GPU use following command:
 
 ```sh
 
