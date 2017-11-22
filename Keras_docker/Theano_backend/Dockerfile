@@ -1,4 +1,4 @@
-FROM khanfarhan/jetson-theano:working
+FROM khanfarhan/jetson-theano:latest
 
 RUN apt-get update && apt-get install -y \
   libhdf5-dev \
