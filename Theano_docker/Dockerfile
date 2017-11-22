@@ -1,0 +1,62 @@
+FROM arm64v8/ubuntu:16.04
+
+ENV LD_LIBRARY_PATH=/usr/lib/aarch64-linux-gnu/tegra:/usr/local/cuda/lib64
+
+
+
+RUN apt-get update && apt-get install -y \
+  gfortran \
+  git \
+  wget \
+  liblapack-dev \
+  libopenblas-dev \
+  python3-dev \
+  python3-numpy \
+  python3-scipy \
+  python3-pip \
+  python3-nose 
+
+   
+
+# Set CUDA_ROOT
+ENV CUDA_ROOT /usr/local/cuda/bin
+
+# Install CMake 3
+RUN cd /root && wget http://www.cmake.org/files/v3.8/cmake-3.8.1.tar.gz && \
+  tar -xf cmake-3.8.1.tar.gz && cd cmake-3.8.1 && \
+  ./configure && \
+  make -j "$(nproc)" && \
+  make install
+
+# Install Cython
+RUN pip3 install Cython
+
+RUN cp /usr/bin/python3 /usr/bin/python
+
+
+
+# Clone libgpuarray repo and move into it
+RUN cd /root && git clone https://github.com/Theano/libgpuarray.git && cd libgpuarray && \
+# Make and move into build directory
+  mkdir Build && cd Build && \
+# CMake
+  cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr && \
+# Make
+  make -j"$(nproc)" && \
+  make install
+
+
+# Install pygpu
+RUN cd /root/libgpuarray && \
+  python3 setup.py build_ext -L /usr/lib -I /usr/include && \
+  python3 setup.py install
+
+# Install bleeding-edge Theano
+
+RUN pip3 install --upgrade six
+RUN pip3 install --upgrade --no-deps git+git://github.com/Theano/Theano.git
+#RUN pip3 install Theano
+
+
+# Set up .theanorc for CUDA
+RUN echo "[global]\ndevice=cuda\nfloatX=float32\n[dnn]\n enabled = True\n[cuda]\nroot = /usr/local/cuda\n[lib]\ncnmem=0.1\n[nvcc]\nfastmath=True" > /root/.theanorc
