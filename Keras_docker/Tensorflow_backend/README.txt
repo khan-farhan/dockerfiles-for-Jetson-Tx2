@@ -3,7 +3,7 @@ Tensorflow : 1.3
 Ubuntu : arm64v8:16.04
 Python : 3.5.2
 
-Has GPU support with theano backend. CUDA driver and the GPU device are not visible to the Docker container thus we need to pass some libraries and give access to devices related to GPU.
+Has GPU support with tensorflow backend. CUDA driver and the GPU device are not visible to the Docker container thus we need to pass some libraries and give access to devices related to GPU.
 
 To run this dockerfile use :
 
