@@ -1,7 +1,5 @@
-dockerfiles-for-Jetson-Tx2
-==========================
+#dockerfiles-for-Jetson-Tx2(JetPack3.1)
 
-This repo has dockerfiles which are meant to be used for testing different deep learning frameworks on Nvidia's Jetson Tx2. The docker images can be found on docker hub at (https://hub.docker.com/r/khanfarhan/). All the images are build on Ubuntu arm64v8(16.04) and are provided with python 3.5.2
 
 
 Installing Docker on Jetson TX2 
