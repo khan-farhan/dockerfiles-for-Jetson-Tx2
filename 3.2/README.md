@@ -24,7 +24,7 @@ $ sudo docker ps
 
 # Running docker images
 
-All the docker images uses a Docker.base as the base image which provides all the drivers and CUDA and CUDNN files needed for utilizing the GPU of Nvidia Jetson.
+All the docker images uses Docker.base as the base image which provides all the drivers and CUDA and CUDNN files needed for utilizing the GPU of Nvidia Jetson.
 
 Use the following command for executing the docker images:
 
