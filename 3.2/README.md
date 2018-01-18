@@ -2,6 +2,8 @@
 
 With JetPack3.2, Nvidia has provided support to docker and it can easily be installed. Follow these instructions to install docker:
 
+
+# sdfsdf
 ```sh
 sudo apt-get update
 sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
