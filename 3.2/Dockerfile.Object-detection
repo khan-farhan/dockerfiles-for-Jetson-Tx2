@@ -1,0 +1,46 @@
+FROM khanfarhan/jetson-tensorflow:1.9
+RUN cd / && \
+    apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y wget unzip git python3-tk && \
+    pip3 install --upgrade pip && \
+    pip3 install Cython && \
+    pip3 install pillow && \
+    pip3 install lxml && \
+    pip3 install jupyter && \
+    pip3 install matplotlib && \
+    pip3 install numpy && \
+    pip3 install scipy && \
+    pip3 install scikit-image && \
+    pip3 install pandas && \
+    git clone https://github.com/cocodataset/cocoapi.git && \
+    cd cocoapi/PythonAPI && \
+    make && \ 
+    make install && \
+    python3 setup.py install && \
+    cd / && \
+    wget https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-aarch_64.zip -O protoc.zip && \
+    unzip protoc.zip -d protoc3 && \
+    mv protoc3/bin/* /usr/local/bin/ && \
+    mv protoc3/include/* /usr/local/include/ && \
+    ln -s /usr/local/bin/protoc /usr/bin/protoc && \
+    rm -r protoc3 && \
+    rm protoc.zip && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get update && \
+    git clone https://github.com/tensorflow/models.git
+
+ENV TF_MODELS_DIR=/models
+ENV TF_MODELS_RESEARCH_DIR=${TF_MODELS_DIR}/research
+ENV PYTHONPATH=$PYTHONPATH:${TF_MODELS_RESEARCH_DIR}:${TF_MODELS_RESEARCH_DIR}/slim
+WORKDIR ${TF_MODELS_RESEARCH_DIR}
+RUN protoc object_detection/protos/*.proto --python_out=. && \
+    python setup.py sdist && \
+    python setup.py install && \
+    cd slim && \
+    python setup.py sdist && \
+    python setup.py install
+
+
+
+WORKDIR ${TF_MODELS_RESEARCH_DIR}

@@ -31,5 +31,6 @@ Use the following command for executing the docker images:
 ```sh
 $ sudo docker run -it --rm --privileged DockerImageName
 ```
+PS: Download Tensorflow 1.9 wheel file from this link https://drive.google.com/file/d/1rtLqbZroF67gpeO4yHy6z7lEL46nDDVr/view?usp=sharing
 
  
